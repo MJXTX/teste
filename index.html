@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecionando...</title>
+  <script>
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
+    const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
+
+    const target = (isMobile || isTablet) ? "mobile/index.html" : "desktop/index.html";
+    window.location.replace(target); // replace evita que o usuário volte para essa tela
+  </script>
+</head>
+<body>
+</body>
+</html>
