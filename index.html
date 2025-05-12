@@ -1,17 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Redirecionando...</title>
+<head> 
+  <meta charset="UTF-8"> 
+  <title>Redirecionando...</title> 
+
   <script>
+    // Obter o agente de usuário
     const userAgent = navigator.userAgent.toLowerCase();
+    
+    // Verificar se é mobile ou tablet
     const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
     const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
+    
+    // Definir o dispositivo como mobile ou desktop
+    const deviceType = (isMobile || isTablet) ? "mobile" : "desktop";
 
-    const target = (isMobile || isTablet) ? "mobile/index.html" : "desktop/index.html";
+    // Obter o país da URL (Exemplo: dominio.com/br, dominio.com/uk, etc.)
+    const urlPath = window.location.pathname;
+    let country = "br"; // Default, caso não encontre país na URL
+
+    // Verificar qual país está na URL
+    if (urlPath.includes("/br")) {
+      country = "br";
+    } else if (urlPath.includes("/es")) {
+      country = "es";
+    } else if (urlPath.includes("/uk")) {
+      country = "uk";
+    } else if (urlPath.includes("/us")) {
+      country = "us";
+    }
+
+    // Redirecionar para a página correta do país e dispositivo
+    const target = /${country}/${deviceType}/index.html;
     window.location.replace(target); // replace evita que o usuário volte para essa tela
   </script>
 </head>
 <body>
+  <!-- Corpo vazio porque o redirecionamento ocorre logo no início -->
 </body>
 </html>
