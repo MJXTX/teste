@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Redirecionando...</title>
 
-  <!-- Google Analytics 4 -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KZYWBQZPK1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,9 +13,9 @@
     gtag('config', 'G-KZYWBQZPK1');
   </script>
 
-  <!-- Script de Redirecionamento -->
+  <!-- Script de Redirecionamento Atualizado -->
   <script>
-    // 1. Lista de países suportados (evita redirecionar para pastas inexistentes)
+    // 1. Países suportados
     const supportedCountries = ['br', 'es', 'uk', 'us'];
     
     // 2. Detecta dispositivo (mobile/tablet ou desktop)
@@ -24,17 +24,17 @@
     const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
     
     // 3. Pega o país da URL (ex: site.com/br → 'br')
-    const urlParts = window.location.pathname.split('/').filter(Boolean); // Remove strings vazias
-    let country = urlParts[0] || 'br'; // Default: 'br' se não houver país
+    const urlParts = window.location.pathname.split('/').filter(Boolean);
+    let country = urlParts[0] || 'br'; // Padrão: 'br' se não houver país
     
     // 4. Valida o país (se não existir, usa 'br')
     if (!supportedCountries.includes(country)) {
       country = 'br';
     }
     
-    // 5. Define o destino final (país + mobile/desktop)
+    // 5. Define o destino SEM BARRA INICIAL (ex: 'br/mobile/index.html')
     const devicePath = (isMobile || isTablet) ? 'mobile' : 'desktop';
-    const targetUrl = /${country}/${devicePath}/index.html;
+    const targetUrl = ${country}/${devicePath}/index.html; // 👈 Sem "/" no início
     
     // 6. Redireciona após 300ms (tempo para o GA registrar)
     setTimeout(() => {
