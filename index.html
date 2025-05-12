@@ -1,37 +1,38 @@
 <!DOCTYPE html>
-<html lang="pt"> <!-- Altere para 'en' se necessário -->
+<html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redirecionando...</title>
 
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KZYWBQZPK1"></script>
   <script>
-    // Função para detectar o país a partir da URL
-    function getCountry() {
-      const urlPath = window.location.pathname;
-      if (urlPath.includes("/br")) return "br";
-      if (urlPath.includes("/es")) return "es";
-      if (urlPath.includes("/uk")) return "uk";
-      if (urlPath.includes("/us")) return "us";
-      return "br"; // Se não tiver país, o padrão será 'br'
-    }
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-KZYWBQZPK1');
+  </script>
 
-    // Detecta se o dispositivo é mobile ou desktop
+  <!-- Script de Redirecionamento para Mobile/Desktop -->
+  <script>
+    // Detectando o dispositivo (mobile ou tablet)
     const userAgent = navigator.userAgent.toLowerCase();
     const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
     const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
-    const deviceType = (isMobile || isTablet) ? "mobile" : "desktop";
 
-    // Obtemos o país da URL
-    const country = getCountry();
+    // Obtendo o diretório de país da URL (ex: '/br', '/es', '/uk', etc.)
+    const country = window.location.pathname.split('/')[1]; // Exemplo: 'br', 'es', 'uk'
 
-    // Redireciona para a página correta dentro do país e dispositivo
-    const target = /${country}/${deviceType}/index.html;
-    window.location.replace(target); // Redireciona o usuário
+    // Define o caminho de destino com base no dispositivo (mobile ou desktop)
+    const target = (isMobile || isTablet) ? /${country}/mobile/index.html : /${country}/desktop/index.html;
+
+    // Espera 300ms para o Google Analytics registrar antes de redirecionar
+    setTimeout(() => {
+      window.location.replace(target);
+    }, 300);
   </script>
 </head>
 <body>
-  <!-- Corpo vazio, pois o redirecionamento acontece automaticamente -->
+  <p>Redirecionando...</p>
 </body>
 </html>
