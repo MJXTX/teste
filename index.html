@@ -2,9 +2,10 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow"> <!-- Evita duplicação no SEO -->
   <title>Redirecionando...</title>
 
-  <!-- Google Analytics -->
+  <!-- Google Analytics 4 (CSP-compatível) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KZYWBQZPK1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,33 +14,30 @@
     gtag('config', 'G-KZYWBQZPK1');
   </script>
 
-  <!-- Script de Redirecionamento Atualizado -->
+  <!-- Script de Redirecionamento (Otimizado) -->
   <script>
     // 1. Países suportados
     const supportedCountries = ['br', 'es', 'uk', 'us'];
     
-    // 2. Detecta dispositivo (mobile/tablet ou desktop)
+    // 2. Detecta dispositivo
     const userAgent = navigator.userAgent.toLowerCase();
     const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
     const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
     
-    // 3. Pega o país da URL (ex: site.com/br → 'br')
+    // 3. Obtém país da URL (ex: site.com/br → 'br')
     const urlParts = window.location.pathname.split('/').filter(Boolean);
-    let country = urlParts[0] || 'br'; // Padrão: 'br' se não houver país
+    let country = urlParts[0] || 'br'; // Padrão: Brasil
     
-    // 4. Valida o país (se não existir, usa 'br')
+    // 4. Valida país
     if (!supportedCountries.includes(country)) {
       country = 'br';
     }
     
-    // 5. Define o destino SEM BARRA INICIAL (ex: 'br/mobile/index.html')
-    const devicePath = (isMobile || isTablet) ? 'mobile' : 'desktop';
-    const targetUrl = ${country}/${devicePath}/index.html; // 👈 Sem "/" no início
+    // 5. Define caminho (sem barra inicial!)
+    const targetUrl = ${country}/${isMobile || isTablet ? 'mobile' : 'desktop'}/index.html;
     
-    // 6. Redireciona após 300ms (tempo para o GA registrar)
-    setTimeout(() => {
-      window.location.replace(targetUrl);
-    }, 300);
+    // 6. Redireciona (sem setTimeout para evitar CSP)
+    window.location.href = targetUrl;
   </script>
 </head>
 <body>
