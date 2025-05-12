@@ -13,20 +13,20 @@
     gtag('config', 'G-KZYWBQZPK1');
   </script>
 
-  <!-- Script de Redirecionamento para Mobile/Desktop -->
   <script>
-    // Detectando o dispositivo (mobile ou tablet)
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    const country = getQueryParam("pais") || "br"; // padrão: br
     const userAgent = navigator.userAgent.toLowerCase();
     const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
     const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
+    const target = (isMobile || isTablet)
+      ? /${country}/mobile/index.html
+      : /${country}/desktop/index.html;
 
-    // Obtendo o diretório de país da URL (ex: '/br', '/es', '/uk', etc.)
-    const country = window.location.pathname.split('/')[1]; // Exemplo: 'br', 'es', 'uk'
-
-    // Define o caminho de destino com base no dispositivo (mobile ou desktop)
-    const target = (isMobile || isTablet) ? /${country}/mobile/index.html : /${country}/desktop/index.html;
-
-    // Espera 300ms para o Google Analytics registrar antes de redirecionar
     setTimeout(() => {
       window.location.replace(target);
     }, 300);
