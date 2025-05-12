@@ -13,22 +13,32 @@
     gtag('config', 'G-KZYWBQZPK1');
   </script>
 
+  <!-- Script de Redirecionamento -->
   <script>
-    function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
-    }
-
-    const country = getQueryParam("pais") || "br"; // padrão: br
+    // 1. Lista de países suportados (evita redirecionar para pastas inexistentes)
+    const supportedCountries = ['br', 'es', 'uk', 'us'];
+    
+    // 2. Detecta dispositivo (mobile/tablet ou desktop)
     const userAgent = navigator.userAgent.toLowerCase();
     const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
     const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
-    const target = (isMobile || isTablet)
-      ? /${country}/mobile/index.html
-      : /${country}/desktop/index.html;
-
+    
+    // 3. Pega o país da URL (ex: site.com/br → 'br')
+    const urlParts = window.location.pathname.split('/').filter(Boolean); // Remove strings vazias
+    let country = urlParts[0] || 'br'; // Default: 'br' se não houver país
+    
+    // 4. Valida o país (se não existir, usa 'br')
+    if (!supportedCountries.includes(country)) {
+      country = 'br';
+    }
+    
+    // 5. Define o destino final (país + mobile/desktop)
+    const devicePath = (isMobile || isTablet) ? 'mobile' : 'desktop';
+    const targetUrl = /${country}/${devicePath}/index.html;
+    
+    // 6. Redireciona após 300ms (tempo para o GA registrar)
     setTimeout(() => {
-      window.location.replace(target);
+      window.location.replace(targetUrl);
     }, 300);
   </script>
 </head>
