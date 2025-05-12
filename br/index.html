@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script>
+    // Detecta se é mobile/tablet ou desktop
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+    // Redireciona instantaneamente
+    window.location.replace(isMobile ? 'mobile/index.html' : 'desktop/index.html');
+  </script>
+</head>
+</html>
