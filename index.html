@@ -1,41 +1,37 @@
 <!DOCTYPE html>
-<html>
-<head> 
-  <meta charset="UTF-8"> 
-  <title>Redirecionando...</title> 
+<html lang="pt"> <!-- Altere para 'en' se necessário -->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecionando...</title>
 
   <script>
-    // Obter o agente de usuário
-    const userAgent = navigator.userAgent.toLowerCase();
-    
-    // Verificar se é mobile ou tablet
-    const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
-    const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
-    
-    // Definir o dispositivo como mobile ou desktop
-    const deviceType = (isMobile || isTablet) ? "mobile" : "desktop";
-
-    // Obter o país da URL (Exemplo: dominio.com/br, dominio.com/uk, etc.)
-    const urlPath = window.location.pathname;
-    let country = "br"; // Default, caso não encontre país na URL
-
-    // Verificar qual país está na URL
-    if (urlPath.includes("/br")) {
-      country = "br";
-    } else if (urlPath.includes("/es")) {
-      country = "es";
-    } else if (urlPath.includes("/uk")) {
-      country = "uk";
-    } else if (urlPath.includes("/us")) {
-      country = "us";
+    // Função para detectar o país a partir da URL
+    function getCountry() {
+      const urlPath = window.location.pathname;
+      if (urlPath.includes("/br")) return "br";
+      if (urlPath.includes("/es")) return "es";
+      if (urlPath.includes("/uk")) return "uk";
+      if (urlPath.includes("/us")) return "us";
+      return "br"; // Se não tiver país, o padrão será 'br'
     }
 
-    // Redirecionar para a página correta do país e dispositivo
+    // Detecta se o dispositivo é mobile ou desktop
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
+    const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
+    const deviceType = (isMobile || isTablet) ? "mobile" : "desktop";
+
+    // Obtemos o país da URL
+    const country = getCountry();
+
+    // Redireciona para a página correta dentro do país e dispositivo
     const target = /${country}/${deviceType}/index.html;
-    window.location.replace(target); // replace evita que o usuário volte para essa tela
+    window.location.replace(target); // Redireciona o usuário
   </script>
 </head>
 <body>
-  <!-- Corpo vazio porque o redirecionamento ocorre logo no início -->
+  <!-- Corpo vazio, pois o redirecionamento acontece automaticamente -->
 </body>
 </html>
