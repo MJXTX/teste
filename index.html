@@ -1,81 +1,36 @@
-
-<html lang="pt">
+<!DOCTYPE html>
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="robots" content="noindex, nofollow">
   <title>Redirecionando...</title>
+  
+  <!-- Google Analytics Global -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KZYWBQZPK1"></script>
   <script>
-    // Função para debug (exibe informações no console e na página)
-    function debugLog(message) {
-      console.log(message);
-      document.body.innerHTML += <p>Debug: ${message}</p>;
-    }
-
-    // Configuração do Google Analytics
-    try {
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', 'G-KZYWBQZPK1');
-      debugLog('Google Analytics configurado');
-    } catch (e) {
-      debugLog('Erro no GA: ' + e.message);
-    }
-
-    // Redirecionamento principal
-    try {
-      debugLog('Iniciando redirecionamento...');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KZYWBQZPK1');
+    
+    // Redirecionamento automático
+    (function(){
+      // 1. Detecta país (padrão: br)
+      const country = (window.location.pathname.match(/\/(br|es|uk|us)(?=\/|$)/i) || ['','br'])[1].toLowerCase();
       
-      // 1. Configurações
-      const supportedCountries = ['br', 'es', 'uk', 'us'];
-      const defaultCountry = 'br';
+      // 2. Detecta dispositivo
+      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
       
-      // 2. Detecção de dispositivo
-      const userAgent = navigator.userAgent.toLowerCase();
-      const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
-      const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
-      const deviceType = isMobile || isTablet ? 'mobile' : 'desktop';
-      debugLog(Dispositivo detectado: ${deviceType});
+      // 3. Envia evento ao GA antes de redirecionar
+      gtag('event', 'auto_redirect', {
+        'country': country,
+        'device_type': isMobile ? 'mobile' : 'desktop'
+      });
       
-      // 3. Extrai país da URL
-      const pathParts = window.location.pathname.split('/').filter(Boolean);
-      let country = pathParts[0] || defaultCountry;
-      
-      // 4. Valida país
-      if (!supportedCountries.includes(country)) {
-        debugLog(País '${country}' não suportado, usando padrão '${defaultCountry}');
-        country = defaultCountry;
-      } else {
-        debugLog(País selecionado: ${country});
-      }
-      
-      // 5. Monta URL de destino
-      const targetUrl = ${country}/${deviceType}/index.html;
-      debugLog(URL de destino: ${targetUrl});
-      
-      // 6. Verificação final antes de redirecionar
-      debugLog('Verificando acesso à URL...');
-      fetch(targetUrl, { method: 'HEAD' })
-        .then(() => {
-          debugLog(Redirecionando para: ${targetUrl});
-          window.location.href = targetUrl;
-        })
-        .catch(() => {
-          debugLog(Falha ao acessar ${targetUrl}, tentando fallback);
-          const fallbackUrl = ${defaultCountry}/desktop/index.html;
-          window.location.href = fallbackUrl;
-        });
-        
-    } catch (error) {
-      debugLog('Erro crítico: ' + error.message);
-      const fallbackUrl = 'br/desktop/index.html';
-      debugLog(Redirecionando para fallback: ${fallbackUrl});
-      window.location.href = fallbackUrl;
-    }
+      // 4. Redireciona após 100ms (tempo para o GA registrar)
+      setTimeout(() => {
+        window.location.replace(/${country}/${isMobile ? 'mobile' : 'desktop'}/index.html);
+      }, 300);
+    })();
   </script>
 </head>
-<body>
-  <h1>Redirecionando...</h1>
-  <div id="debug-info"></div>
-</body>
 </html>
