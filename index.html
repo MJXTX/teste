@@ -2,45 +2,80 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <meta name="robots" content="noindex, nofollow"> <!-- Evita duplicação no SEO -->
+  <meta name="robots" content="noindex, nofollow">
   <title>Redirecionando...</title>
-
-  <!-- Google Analytics 4 (CSP-compatível) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KZYWBQZPK1"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-KZYWBQZPK1');
-  </script>
-
-  <!-- Script de Redirecionamento (Otimizado) -->
-  <script>
-    // 1. Países suportados
-    const supportedCountries = ['br', 'es', 'uk', 'us'];
-    
-    // 2. Detecta dispositivo
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
-    const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
-    
-    // 3. Obtém país da URL (ex: site.com/br → 'br')
-    const urlParts = window.location.pathname.split('/').filter(Boolean);
-    let country = urlParts[0] || 'br'; // Padrão: Brasil
-    
-    // 4. Valida país
-    if (!supportedCountries.includes(country)) {
-      country = 'br';
+    // Função para debug (exibe informações no console e na página)
+    function debugLog(message) {
+      console.log(message);
+      document.body.innerHTML += <p>Debug: ${message}</p>;
     }
-    
-    // 5. Define caminho (sem barra inicial!)
-    const targetUrl = ${country}/${isMobile || isTablet ? 'mobile' : 'desktop'}/index.html;
-    
-    // 6. Redireciona (sem setTimeout para evitar CSP)
-    window.location.href = targetUrl;
+
+    // Configuração do Google Analytics
+    try {
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-KZYWBQZPK1');
+      debugLog('Google Analytics configurado');
+    } catch (e) {
+      debugLog('Erro no GA: ' + e.message);
+    }
+
+    // Redirecionamento principal
+    try {
+      debugLog('Iniciando redirecionamento...');
+      
+      // 1. Configurações
+      const supportedCountries = ['br', 'es', 'uk', 'us'];
+      const defaultCountry = 'br';
+      
+      // 2. Detecção de dispositivo
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry/.test(userAgent);
+      const isTablet = /ipad|android(?!.*mobile)/.test(userAgent);
+      const deviceType = isMobile || isTablet ? 'mobile' : 'desktop';
+      debugLog(Dispositivo detectado: ${deviceType});
+      
+      // 3. Extrai país da URL
+      const pathParts = window.location.pathname.split('/').filter(Boolean);
+      let country = pathParts[0] || defaultCountry;
+      
+      // 4. Valida país
+      if (!supportedCountries.includes(country)) {
+        debugLog(País '${country}' não suportado, usando padrão '${defaultCountry}');
+        country = defaultCountry;
+      } else {
+        debugLog(País selecionado: ${country});
+      }
+      
+      // 5. Monta URL de destino
+      const targetUrl = ${country}/${deviceType}/index.html;
+      debugLog(URL de destino: ${targetUrl});
+      
+      // 6. Verificação final antes de redirecionar
+      debugLog('Verificando acesso à URL...');
+      fetch(targetUrl, { method: 'HEAD' })
+        .then(() => {
+          debugLog(Redirecionando para: ${targetUrl});
+          window.location.href = targetUrl;
+        })
+        .catch(() => {
+          debugLog(Falha ao acessar ${targetUrl}, tentando fallback);
+          const fallbackUrl = ${defaultCountry}/desktop/index.html;
+          window.location.href = fallbackUrl;
+        });
+        
+    } catch (error) {
+      debugLog('Erro crítico: ' + error.message);
+      const fallbackUrl = 'br/desktop/index.html';
+      debugLog(Redirecionando para fallback: ${fallbackUrl});
+      window.location.href = fallbackUrl;
+    }
   </script>
 </head>
 <body>
-  <p>Redirecionando...</p>
+  <h1>Redirecionando...</h1>
+  <div id="debug-info"></div>
 </body>
 </html>
