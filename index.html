@@ -3,32 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>Redirecionando...</title>
-  
+
   <!-- Google Analytics Global -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KZYWBQZPK1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-KZYWBQZPK1');
-    
-    // Redirecionamento automático
+
     (function(){
-      // 1. Detecta país (padrão: br)
-      const country = (window.location.pathname.match(/\/(br|es|uk|us)(?=\/|$)/i) || ['','br'])[1].toLowerCase();
-      
+      // 1. Detecta país pelo path atual, padrão 'br' se não encontrado
+      const match = window.location.pathname.match(/\/(br|es|uk|us)(?=\/|$)/i);
+      const country = (match ? match[1] : 'br').toLowerCase();
+
       // 2. Detecta dispositivo
       const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      
-      // 3. Envia evento ao GA antes de redirecionar
+      const deviceFolder = isMobile ? 'mobile' : 'desktop';
+
+      // 3. Envia evento ao GA
       gtag('event', 'auto_redirect', {
         'country': country,
-        'device_type': isMobile ? 'mobile' : 'desktop'
+        'device_type': deviceFolder
       });
-      
-      // 4. Redireciona após 100ms (tempo para o GA registrar)
+
+      // 4. Redireciona após pequeno delay
       setTimeout(() => {
-        window.location.replace(/${country}/${isMobile ? 'mobile' : 'desktop'}/index.html);
+        window.location.replace(/${country}/${deviceFolder}/index.html);
       }, 300);
     })();
   </script>
