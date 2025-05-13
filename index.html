@@ -15,18 +15,18 @@
 <body>
     <h1>Meu Site</h1>
 
-    <!-- Implementação Ultra-Resiliente do GA4 -->
+    <!-- Implementação do GA4 -->
     <script>
-        // 1. Inicialização segura do dataLayer
+        // 1. Inicialização do dataLayer
         window.dataLayer = window.dataLayer || [];
         
-        // 2. Função gtag com fallback integrado
+        // 2. Função gtag
         function gtag(){
             try {
                 dataLayer.push(arguments);
             } catch(e) {
-                console.warn('Falha no dataLayer - Usando fallback direto');
-                // Fallback direto para API de medição
+                console.warn('Falha no dataLayer - Enviando evento de fallback');
+                // Envia evento de fallback para o Google Analytics
                 if(arguments[0] === 'event') {
                     const eventData = {
                         v: '2',
@@ -39,53 +39,42 @@
                 }
             }
         }
-        
-        // 3. Configuração inicial
+
+        // 3. Inicialização do Google Analytics
         gtag('js', new Date());
         gtag('config', 'G-6E8ZC9YNDQ', {
             transport_type: 'beacon',
             cookie_flags: 'SameSite=None;Secure'
         });
         
-        // 4. Carregamento com múltiplos fallbacks
+        // 4. Carregar script do Google Analytics com fallback simples
         function loadGA() {
-            // Tentativa 1: Carregamento padrão
             const script = document.createElement('script');
             script.src = 'https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ';
             script.async = true;
-            
+
+            // Se falhar, tenta um fallback simples
             script.onerror = function() {
-                // Fallback caso a tentativa falhe
-                console.warn('Falha no carregamento do Google Analytics - tentando fallback');
-                window['ga-disable-G-6E8ZC9YNDQ'] = false;
+                console.warn('Falha no carregamento do Google Analytics - Ativando fallback');
+                window['ga-disable-G-6E8ZC9YNDQ'] = true;
                 gtag('event', 'fallback_activated');
             };
             
             document.head.appendChild(script);
         }
-        
-        // 5. Verificação de ambiente
-        if(document.location.hostname === 'localhost') {
-            console.log('Ambiente local - GA4 simulado');
-            window['ga-disable-G-6E8ZC9YNDQ'] = true;
-        } else {
-            // Delay para evitar bloqueio por scripts de terceiros
-            setTimeout(loadGA, 500);
-        }
+
+        // 5. Carregar o script com um pequeno atraso para evitar bloqueio de terceiros
+        setTimeout(loadGA, 500);
+
     </script>
     
     <!-- Verificação de funcionamento -->
     <script>
         setTimeout(function() {
-            if(typeof gtag === 'function' && window.dataLayer.some(item => item.event === 'gtm.js')) {
+            if (typeof gtag === 'function') {
                 console.log('✅ GA4 carregado com sucesso');
             } else {
-                console.warn('⚠️ GA4 usando fallback');
-                gtag('event', 'page_view', {
-                    page_title: document.title,
-                    page_location: location.href,
-                    page_path: location.pathname
-                });
+                console.warn('⚠️ Google Analytics não foi carregado');
             }
         }, 3000);
     </script>
