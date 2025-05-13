@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <title>Redirecionando...</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KZYWBQZPK1"></script>
   <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-KZYWBQZPK1');
+
     // Detecta se é mobile/tablet ou desktop
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-    // Redireciona instantaneamente
+    
+    // Envia evento para o Google Analytics antes de redirecionar
+    gtag('event', 'auto_redirect', {
+      'device_type': isMobile ? 'mobile' : 'desktop'
+    });
+
+    // Redireciona para a página apropriada
     window.location.replace(isMobile ? 'mobile/index.html' : 'desktop/index.html');
   </script>
 </head>
