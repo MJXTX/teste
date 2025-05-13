@@ -15,9 +15,10 @@
 
     (function() {
       try {
+        const basePath = '/teste'; // ADICIONE SEU CAMINHO AQUI
         const path = window.location.pathname;
         let country = 'br';
-        const match = path.match(/^\/(br|es|uk|us)(?:\/|$)/i);
+        const match = path.match(/^\/teste\/(br|es|uk|us)(?:\/|$)/i);
         if (match && match[1]) country = match[1].toLowerCase();
 
         const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -29,13 +30,13 @@
           'page_path': `${country}/${devicePath}/`
         });
 
-        const newUrl = `/${country}/${devicePath}/index.html`;
+        const newUrl = `${basePath}/${country}/${devicePath}/index.html`;
         if (window.location.pathname !== newUrl) {
           window.location.replace(newUrl);
         }
       } catch (e) {
         console.error('Erro no redirecionamento:', e);
-        window.location.replace('/br/desktop/index.html');
+        window.location.replace('/teste/br/desktop/index.html');
       }
     })();
   </script>
