@@ -14,6 +14,7 @@
     gtag('config', 'G-XT86ZNLK1N');
   </script>
 
+  <!-- O link do CSS será inserido via script -->
   <link id="css-link" rel="stylesheet">
 </head>
 <body>
@@ -34,16 +35,15 @@
     fetch(`${pasta}/index.html`)
       .then(res => res.text())
       .then(html => {
-        // Corrige os caminhos de src e href no HTML
-        const corrigido = html
-          .replace(/(src|href)=["'](?!https?:|\/)([^"']+)["']/g, (match, tipo, caminho) => {
-            return `${tipo}="${pasta}/${caminho}"`;
-          });
+        // Corrige os caminhos relativos de imagens, links e scripts
+        const corrigido = html.replace(/(src|href)=["'](?!https?:|\/)([^"']+)["']/g, (match, tipo, caminho) => {
+          return `${tipo}="${pasta}/${caminho}"`;
+        });
 
-        // Insere o HTML no DOM
+        // Insere o conteúdo corrigido
         document.getElementById('app').innerHTML = corrigido;
 
-        // Carrega JS separado, se necessário
+        // Carrega script.js externo, se necessário
         const script = document.createElement('script');
         script.src = `${pasta}/script.js`;
         document.body.appendChild(script);
