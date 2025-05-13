@@ -4,26 +4,25 @@
   <meta charset="UTF-8">
   <title>Redirecionando...</title>
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KZYWBQZPK1"></script>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
 
     gtag('js', new Date());
-    gtag('config', 'G-KZYWBQZPK1');
+    gtag('config', 'G-6E8ZC9YNDQ');
 
-    // Espera o carregamento do GA para enviar evento
     window.addEventListener('load', () => {
       const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
       const destino = isMobile ? 'mobile/index.html' : 'desktop/index.html';
 
-      // Envia evento de redirecionamento
+      // Envia evento para GA antes do redirecionamento
       gtag('event', 'auto_redirect', {
         'device_type': isMobile ? 'mobile' : 'desktop'
       });
 
-      // Aguarda 300ms para garantir que o evento seja enviado antes de redirecionar
+      // Aguarda 300ms para garantir o envio do evento
       setTimeout(() => {
         window.location.replace(destino);
       }, 300);
