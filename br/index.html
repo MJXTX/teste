@@ -16,9 +16,9 @@
     // Detecta o país e dispositivo
     const path = window.location.pathname;
     
-    // Verifique se o path começa com /br, /es, /uk ou /us
-    const match = path.match(/^\/(br|es|uk|us)(?=\/|$)/i);
-    const country = match ? match[1].toLowerCase() : 'br'; // Se não encontrar, assume 'br' por padrão
+    // Verifica a URL e captura o país
+    const match = path.match(/^\/(br|es|uk|us)\/?/i);  // Expressão regular corrigida
+    const country = match ? match[1].toLowerCase() : 'br'; // Usa 'br' por padrão se não encontrar
 
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
