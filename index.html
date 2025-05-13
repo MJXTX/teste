@@ -3,80 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Seu Site</title>
-    
-    <!-- CSP Relaxado para GitHub Pages -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' https://www.googletagmanager.com https://*.google-analytics.com 'unsafe-inline' 'unsafe-eval';
-        connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com;
-        img-src 'self' data: https://*.google-analytics.com;
-    ">
 </head>
-<body>
-    <h1>Meu Site</h1>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XT86ZNLK1N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    <!-- Implementação do GA4 -->
-    <script>
-        // 1. Inicialização do dataLayer
-        window.dataLayer = window.dataLayer || [];
-        
-        // 2. Função gtag
-        function gtag(){
-            try {
-                dataLayer.push(arguments);
-            } catch(e) {
-                console.warn('Falha no dataLayer - Enviando evento de fallback');
-                // Envia evento de fallback para o Google Analytics
-                if(arguments[0] === 'event') {
-                    const eventData = {
-                        v: '2',
-                        tid: 'G-6E8ZC9YNDQ',
-                        en: arguments[1],
-                        ...arguments[2]
-                    };
-                    navigator.sendBeacon('https://www.google-analytics.com/g/collect', 
-                        new URLSearchParams(eventData).toString());
-                }
-            }
-        }
-
-        // 3. Inicialização do Google Analytics
-        gtag('js', new Date());
-        gtag('config', 'G-6E8ZC9YNDQ', {
-            transport_type: 'beacon',
-            cookie_flags: 'SameSite=None;Secure'
-        });
-        
-        // 4. Carregar script do Google Analytics com fallback simples
-        function loadGA() {
-            const script = document.createElement('script');
-            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ';
-            script.async = true;
-
-            // Se falhar, tenta um fallback simples
-            script.onerror = function() {
-                console.warn('Falha no carregamento do Google Analytics - Ativando fallback');
-                window['ga-disable-G-6E8ZC9YNDQ'] = true;
-                gtag('event', 'fallback_activated');
-            };
-            
-            document.head.appendChild(script);
-        }
-
-        // 5. Carregar o script com um pequeno atraso para evitar bloqueio de terceiros
-        setTimeout(loadGA, 500);
-
-    </script>
-    
-    <!-- Verificação de funcionamento -->
-    <script>
-        setTimeout(function() {
-            if (typeof gtag === 'function') {
-                console.log('✅ GA4 carregado com sucesso');
-            } else {
-                console.warn('⚠️ Google Analytics não foi carregado');
-            }
-        }, 3000);
-    </script>
-</body>
+  gtag('config', 'G-XT86ZNLK1N');
+</script>
 </html>
