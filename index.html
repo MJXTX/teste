@@ -2,19 +2,23 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>Teste GA4</title>
+    <!-- Meta tag CSP compatível com GitHub Pages -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://*.google-analytics.com 'unsafe-inline'; img-src * data:; connect-src *">
     
-    <!-- Google Tag Manager (gtag.js) - GA4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
+    <!-- Script GA4 modificado para GitHub -->
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag(){window.dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-6E8ZC9YNDQ'); // Seu ID GA4
+        gtag('config', 'G-6E8ZC9YNDQ', {
+            cookie_flags: 'SameSite=None;Secure',
+            send_page_view: true,
+            transport_url: 'https://www.google-analytics.com'
+        });
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
 </head>
 <body>
-    <h1>Teste Google Analytics 4 (GA4)</h1>
-    <p>Esta página está rastreando via GA4 com gtag.js.</p>
+    Conteúdo do seu site
 </body>
 </html>
