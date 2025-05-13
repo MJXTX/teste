@@ -2,37 +2,56 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; connect-src https://www.google-analytics.com;">
   <title>Redirecionando...</title>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
   <script>
+    // Inicialização do GA
     window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-6E8ZC9YNDQ');
 
-    // Detecta o país e dispositivo
-    const path = window.location.pathname;
-    
-    // Verifica a URL e captura o país
-    const match = path.match(/^\/(br|es|uk|us)\/?/i);  // Expressão regular corrigida
-    const country = match ? match[1].toLowerCase() : 'br'; // Usa 'br' por padrão se não encontrar
+    // Função principal com tratamento de erros
+    (function() {
+      try {
+        // Detecção do país com fallback
+        const path = window.location.pathname;
+        let country = 'br'; // valor padrão
+        
+        // Expressão regular mais robusta
+        const countryMatch = path.match(/^\/(br|es|uk|us)(?:\/|$)/i);
+        if (countryMatch && countryMatch[1]) {
+          country = countryMatch[1].toLowerCase();
+        }
 
-    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+        // Detecção de dispositivo
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const devicePath = isMobile ? 'mobile' : 'desktop';
 
-    // Envia evento para o Google Analytics
-    gtag('event', 'auto_redirect', {
-      'country': country,
-      'device_type': isMobile ? 'mobile' : 'desktop'
-    });
+        // Envio de dados para GA
+        gtag('event', 'page_redirect', {
+          'country': country,
+          'device_type': devicePath,
+          'page_path': /${country}/${devicePath}/
+        });
 
-    // Redirecionamento para a página apropriada
-    window.location.replace(/${country}/${isMobile ? 'mobile' : 'desktop'}/index.html);
+        // Redirecionamento seguro
+        const newUrl = /${country}/${devicePath}/index.html;
+        if (window.location.pathname !== newUrl) {
+          window.location.replace(newUrl);
+        }
+      } catch (error) {
+        console.error('Erro no redirecionamento:', error);
+        // Fallback seguro
+        window.location.replace('/br/desktop/index.html');
+      }
+    })();
   </script>
 </head>
-<body>
-  <!-- Página de redirecionamento -->
+<body style="display:none">
+  <!-- Conteúdo oculto -->
 </body>
 </html>
