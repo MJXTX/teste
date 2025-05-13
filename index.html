@@ -1,37 +1,18 @@
+<!-- test.html -->
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Redirecionando...</title>
-
-  <!-- Google Analytics Global -->
+  <title>Teste GA</title>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-6E8ZC9YNDQ');
-
-    (function(){
-      // 1. Detecta país pelo path atual, padrão 'br' se não encontrado
-      const match = window.location.pathname.match(/\/(br|es|uk|us)(?=\/|$)/i);
-      const country = (match ? match[1] : 'br').toLowerCase();
-
-      // 2. Detecta dispositivo
-      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      const deviceFolder = isMobile ? 'mobile' : 'desktop';
-
-      // 3. Envia evento ao GA
-      gtag('event', 'auto_redirect', {
-        'country': country,
-        'device_type': deviceFolder
-      });
-
-      // 4. Redireciona após pequeno delay
-      setTimeout(() => {
-        window.location.replace(/${country}/${deviceFolder}/index.html);
-      }, 300);
-    })();
   </script>
 </head>
+<body>
+  <h1>Teste Google Analytics</h1>
+</body>
 </html>
