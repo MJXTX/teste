@@ -13,20 +13,34 @@
     gtag('js', new Date());
     gtag('config', 'G-XT86ZNLK1N');
 
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
       const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-      const destino = isMobile ? 'mobile/index.html' : 'desktop/index.html';
+      const deviceFolder = isMobile ? 'mobile' : 'desktop';
+      const destino = `${deviceFolder}/index.html`;
 
-      // Envia evento para GA antes do redirecionamento
+      // GA event
       gtag('event', 'auto_redirect', {
         'device_type': isMobile ? 'mobile' : 'desktop'
       });
 
-      // Aguarda 300ms para garantir o envio do evento
-      setTimeout(() => {
-        window.location.replace(destino);
-      }, 300);
+      // Aguarda 200ms para o GA registrar
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      try {
+        const response = await fetch(destino);
+        const html = await response.text();
+        document.open();
+        document.write(html);
+        document.close();
+
+        // Mantém URL limpa
+        history.replaceState(null, '', window.location.pathname.replace(/\/(mobile|desktop)\/index\.html$/, '/'));
+      } catch (e) {
+        console.error('Erro ao carregar conteúdo:', e);
+        document.body.innerHTML = '<h1>Erro ao carregar a página</h1>';
+      }
     });
   </script>
 </head>
+
 </html>
