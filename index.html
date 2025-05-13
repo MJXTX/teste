@@ -2,109 +2,102 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seu Site no GitHub Pages</title>
+    <title>Seu Site</title>
     
-    <!-- Política de Segurança Otimizada para GitHub Pages + GA4 -->
+    <!-- CSP Relaxado para GitHub Pages -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-        script-src 'self' https://www.googletagmanager.com https://*.google-analytics.com 'unsafe-inline';
-        img-src 'self' https://*.google-analytics.com data:;
+        script-src 'self' https://www.googletagmanager.com https://*.google-analytics.com 'unsafe-inline' 'unsafe-eval';
         connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com;
-        frame-src 'none';
-        style-src 'self' 'unsafe-inline';
-        font-src 'self';
-        object-src 'none';
-        base-uri 'self';
-        form-action 'self';
+        img-src 'self' data: https://*.google-analytics.com;
     ">
-    
-    <!-- Pré-conexão para melhor performance -->
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://www.google-analytics.com">
-    
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-    </style>
 </head>
 <body>
-    <h1>Meu Site no GitHub Pages</h1>
-    <p>Implementação robusta do Google Analytics 4</p>
-    
-    <!-- Implementação Principal do GA4 -->
+    <h1>Meu Site</h1>
+
+    <!-- Implementação Ultra-Resiliente do GA4 -->
     <script>
-        // Configuração inicial do dataLayer
+        // 1. Inicialização segura do dataLayer
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
         
-        // Configuração estendida para GitHub Pages
-        gtag('config', 'G-6E8ZC9YNDQ', {
-            cookie_flags: 'SameSite=None;Secure',
-            transport_url: 'https://www.google-analytics.com',
-            send_page_view: true,
-            debug_mode: true
-        });
-    </script>
-    
-    <!-- Carregamento assíncrono com fallback -->
-    <script>
-        (function() {
-            var gaLoadTimeout = setTimeout(function() {
-                if(typeof gtag === 'undefined') {
-                    console.warn('GTAG não carregado - Acionando fallback manual');
-                    fetch('https://www.google-analytics.com/g/collect?v=2&tid=G-6E8ZC9YNDQ&en=fallback_ping&epn.status=manual_fallback', {
-                        mode: 'no-cors',
-                        keepalive: true
-                    });
+        // 2. Função gtag com fallback integrado
+        function gtag(){
+            try {
+                dataLayer.push(arguments);
+            } catch(e) {
+                console.warn('Falha no dataLayer - Usando fallback direto');
+                // Fallback direto para API de medição
+                if(arguments[0] === 'event') {
+                    const eventData = {
+                        v: '2',
+                        tid: 'G-6E8ZC9YNDQ',
+                        en: arguments[1],
+                        ...arguments[2]
+                    };
+                    navigator.sendBeacon('https://www.google-analytics.com/g/collect', 
+                        new URLSearchParams(eventData).toString());
                 }
-            }, 3000);
+            }
+        }
+        
+        // 3. Configuração inicial
+        gtag('js', new Date());
+        gtag('config', 'G-6E8ZC9YNDQ', {
+            transport_type: 'beacon',
+            cookie_flags: 'SameSite=None;Secure'
+        });
+        
+        // 4. Carregamento com múltiplos fallbacks
+        function loadGA() {
+            // Tentativa 1: Carregamento padrão
+            const script = document.createElement('script');
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ';
+            script.async = true;
             
-            var gaScript = document.createElement('script');
-            gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ';
-            gaScript.async = true;
-            gaScript.onload = function() { clearTimeout(gaLoadTimeout); };
-            gaScript.onerror = function() {
-                clearTimeout(gaLoadTimeout);
-                console.error('Falha no carregamento do GTAG - Usando fallback completo');
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-6E8ZC9YNDQ', {
-                    transport_type: 'beacon',
-                    cookie_flags: 'SameSite=None;Secure'
-                });
+            script.onerror = function() {
+                // Tentativa 2: Carregamento alternativo
+                console.warn('Falha no carregamento principal - Tentando CDN alternativo');
+                const altScript = document.createElement('script');
+                altScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ&l=dataLayer&cx=c';
+                altScript.async = true;
                 
-                // Envio manual de eventos críticos
-                navigator.sendBeacon('https://www.google-analytics.com/g/collect', new URLSearchParams({
-                    v: '2',
-                    tid: 'G-6E8ZC9YNDQ',
-                    en: 'page_view',
-                    dl: window.location.href,
-                    dt: document.title
-                }));
+                altScript.onerror = function() {
+                    // Tentativa 3: Fallback completo
+                    console.warn('Falha em todos os métodos - Ativando modo offline');
+                    window['ga-disable-G-6E8ZC9YNDQ'] = false;
+                    gtag('event', 'fallback_activated');
+                };
+                
+                document.head.appendChild(altScript);
             };
-            document.head.appendChild(gaScript);
-        })();
+            
+            document.head.appendChild(script);
+        }
+        
+        // 5. Verificação de ambiente
+        if(document.location.hostname === 'localhost') {
+            console.log('Ambiente local - GA4 simulado');
+            window['ga-disable-G-6E8ZC9YNDQ'] = true;
+        } else {
+            // Delay para evitar bloqueio por scripts de terceiros
+            setTimeout(loadGA, 500);
+        }
     </script>
     
     <!-- Verificação de funcionamento -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('GA4 Debug: Página carregada - Verificando tracking...');
-            setTimeout(function() {
-                if(window.dataLayer && window.dataLayer.some(i => i.event === 'gtm.js')) {
-                    console.log('✅ GA4 carregado com sucesso via GTAG');
-                } else {
-                    console.warn('⚠️ GA4 não detectado - Fallback ativado');
-                }
-            }, 2000);
-        });
+        setTimeout(function() {
+            if(typeof gtag === 'function' && window.dataLayer.some(item => item.event === 'gtm.js')) {
+                console.log('✅ GA4 carregado com sucesso');
+            } else {
+                console.warn('⚠️ GA4 usando fallback');
+                gtag('event', 'page_view', {
+                    page_title: document.title,
+                    page_location: location.href,
+                    page_path: location.pathname
+                });
+            }
+        }, 3000);
     </script>
 </body>
 </html>
