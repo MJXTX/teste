@@ -10,48 +10,39 @@
   <script>
     // Inicialização do GA
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-6E8ZC9YNDQ');
 
-    // Função principal com tratamento de erros
     (function() {
       try {
-        // Detecção do país com fallback
         const path = window.location.pathname;
-        let country = 'br'; // valor padrão
-        
-        // Expressão regular mais robusta
-        const countryMatch = path.match(/^\/(br|es|uk|us)(?:\/|$)/i);
-        if (countryMatch && countryMatch[1]) {
-          country = countryMatch[1].toLowerCase();
-        }
+        let country = 'br';
+        const match = path.match(/^\/(br|es|uk|us)(?:\/|$)/i);
+        if (match && match[1]) country = match[1].toLowerCase();
 
-        // Detecção de dispositivo
         const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         const devicePath = isMobile ? 'mobile' : 'desktop';
 
-        // Envio de dados para GA
+        // Envia evento ao GA
         gtag('event', 'page_redirect', {
           'country': country,
           'device_type': devicePath,
-          'page_path': /${country}/${devicePath}/
+          'page_path': ${country}/${devicePath}/
         });
 
-        // Redirecionamento seguro
         const newUrl = /${country}/${devicePath}/index.html;
         if (window.location.pathname !== newUrl) {
           window.location.replace(newUrl);
         }
-      } catch (error) {
-        console.error('Erro no redirecionamento:', error);
-        // Fallback seguro
+      } catch (e) {
+        console.error('Erro no redirecionamento:', e);
         window.location.replace('/br/desktop/index.html');
       }
     })();
   </script>
 </head>
-<body style="display:none">
-  <!-- Conteúdo oculto -->
+<body>
+  <!-- Redirecionando... -->
 </body>
 </html>
