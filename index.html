@@ -55,20 +55,10 @@
             script.async = true;
             
             script.onerror = function() {
-                // Tentativa 2: Carregamento alternativo
-                console.warn('Falha no carregamento principal - Tentando CDN alternativo');
-                const altScript = document.createElement('script');
-                altScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ&l=dataLayer&cx=c';
-                altScript.async = true;
-                
-                altScript.onerror = function() {
-                    // Tentativa 3: Fallback completo
-                    console.warn('Falha em todos os métodos - Ativando modo offline');
-                    window['ga-disable-G-6E8ZC9YNDQ'] = false;
-                    gtag('event', 'fallback_activated');
-                };
-                
-                document.head.appendChild(altScript);
+                // Fallback caso a tentativa falhe
+                console.warn('Falha no carregamento do Google Analytics - tentando fallback');
+                window['ga-disable-G-6E8ZC9YNDQ'] = false;
+                gtag('event', 'fallback_activated');
             };
             
             document.head.appendChild(script);
