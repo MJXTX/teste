@@ -2,74 +2,56 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Meu Site - Redirecionando</title>
+  <title>Meu Site</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Analytics (GA4) -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT86ZNLK1N"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
-
     gtag('js', new Date());
     gtag('config', 'G-XT86ZNLK1N');
   </script>
 
-  <!-- Estilo padrão -->
-  <link id="dynamic-style" rel="stylesheet" href="">
+  <link id="css-link" rel="stylesheet">
 </head>
 <body>
-  <div id="app">Carregando conteúdo...</div>
+  <div id="app">Carregando...</div>
 
   <script>
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-    const pasta = isMobile ? 'mobile' : 'desktop';  // Determina qual pasta carregar
+    const pasta = isMobile ? 'mobile' : 'desktop';
 
-    // Envia evento para o GA
     gtag('event', 'auto_redirect', {
       'device_type': pasta
     });
 
-    // Carrega o CSS da pasta correta
-    const cssPath = `${pasta}/style.css`;
-    fetch(cssPath).then(r => {
-      if (r.ok) {
-        document.getElementById('dynamic-style').href = cssPath;
-      }
-    });
+    // Aplica CSS correto
+    document.getElementById('css-link').href = `${pasta}/style.css`;
 
-    // Carrega conteúdo HTML
+    // Carrega o HTML da pasta
     fetch(`${pasta}/index.html`)
       .then(res => res.text())
       .then(html => {
-        document.getElementById('app').innerHTML = html;
+        // Corrige os caminhos de src e href no HTML
+        const corrigido = html
+          .replace(/(src|href)=["'](?!https?:|\/)([^"']+)["']/g, (match, tipo, caminho) => {
+            return `${tipo}="${pasta}/${caminho}"`;
+          });
 
-        // Carregar JS associado ao conteúdo carregado
+        // Insere o HTML no DOM
+        document.getElementById('app').innerHTML = corrigido;
+
+        // Carrega JS separado, se necessário
         const script = document.createElement('script');
         script.src = `${pasta}/script.js`;
         document.body.appendChild(script);
-
-        // Atualizar as URLs das imagens
-        updateImagePaths();
       })
-      .catch(() => {
-        document.getElementById('app').innerHTML = "Erro ao carregar o conteúdo.";
+      .catch(err => {
+        console.error('Erro ao carregar:', err);
+        document.getElementById('app').innerText = 'Erro ao carregar conteúdo.';
       });
-
-    // Ajuste nas URLs das imagens
-    function updateImagePaths() {
-      const images = document.querySelectorAll('img');
-      images.forEach(img => {
-        const originalSrc = img.getAttribute('src');
-        const newSrc = `/${pasta}/${originalSrc}`;
-        img.setAttribute('src', newSrc);
-      });
-    }
-
-    // Verifica se as imagens estão carregando corretamente após o conteúdo ser carregado
-    document.addEventListener('DOMContentLoaded', () => {
-      updateImagePaths();
-    });
   </script>
 </body>
 </html>
