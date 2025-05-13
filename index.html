@@ -1,18 +1,51 @@
-<!-- test.html -->
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <title>Teste GA</title>
+  <title>Redirecionando...</title>
+
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-6E8ZC9YNDQ');
+
+    window.addEventListener('load', () => {
+      gtag('js', new Date());
+      gtag('config', 'G-6E8ZC9YNDQ');
+
+      try {
+        const basePath = '/teste'; // Caminho base do repositório GitHub Pages
+        const path = window.location.pathname;
+
+        // Detecta país na URL
+        let country = 'br'; // padrão
+        const match = path.match(/^\/teste\/(br|es|uk|us)(?:\/|$)/i);
+        if (match && match[1]) country = match[1].toLowerCase();
+
+        // Detecta se é mobile
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const devicePath = isMobile ? 'mobile' : 'desktop';
+
+        // Envia evento para GA
+        gtag('event', 'page_redirect', {
+          country: country,
+          device_type: devicePath,
+          page_path: `${country}/${devicePath}/`
+        });
+
+        // Redireciona após pequeno delay
+        const newUrl = `${basePath}/${country}/${devicePath}/index.html`;
+        setTimeout(() => {
+          window.location.replace(newUrl);
+        }, 300); // 300ms para garantir envio ao GA
+
+      } catch (e) {
+        console.error('Erro no redirecionamento:', e);
+        window.location.replace('/teste/br/desktop/index.html');
+      }
+    });
   </script>
 </head>
-<body>
-  <h1>Teste Google Analytics</h1>
-</body>
+<body style="display:none"></body>
 </html>
