@@ -1,27 +1,18 @@
+<!-- test.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Redirecionando...</title>
-
-  <!-- Google Analytics (GA4) -->
+  <title>Teste GA</title>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-6E8ZC9YNDQ');
-
-    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-    const destino = isMobile ? 'mobile/index.html' : 'desktop/index.html';
-
-    // Envia evento e redireciona logo em seguida
-    gtag('event', 'auto_redirect', {
-      'device_type': isMobile ? 'mobile' : 'desktop'
-    });
-
-    window.location.replace(destino);
   </script>
 </head>
+<body>
+  <h1>Teste Google Analytics</h1>
+</body>
 </html>
