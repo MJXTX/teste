@@ -13,15 +13,18 @@
     gtag('js', new Date());
     gtag('config', 'G-6E8ZC9YNDQ');
 
+    // Detecta o país e dispositivo
     const path = window.location.pathname;
-    const country = (path.match(/\/(br|es|uk|us)/i) || ['', 'br'])[1].toLowerCase();
+    const country = (path.match(/\/(br|es|uk|us)(?=\/|$)/i) || ['', 'br'])[1].toLowerCase();
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
+    // Envia evento para o Google Analytics
     gtag('event', 'auto_redirect', {
       'country': country,
       'device_type': isMobile ? 'mobile' : 'desktop'
     });
 
+    // Redirecionamento para a página apropriada
     window.location.replace(/${country}/${isMobile ? 'mobile' : 'desktop'}/index.html);
   </script>
 </head>
