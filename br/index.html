@@ -14,7 +14,7 @@
     gtag('config', 'G-XT86ZNLK1N');
   </script>
 
-  <!-- O link do CSS será inserido via script -->
+  <!-- CSS será carregado dinamicamente -->
   <link id="css-link" rel="stylesheet">
 </head>
 <body>
@@ -23,33 +23,33 @@
   <script>
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
     const pasta = isMobile ? 'mobile' : 'desktop';
+    window.basePath = pasta;
 
     gtag('event', 'auto_redirect', {
       'device_type': pasta
     });
 
-    // Aplica CSS correto
+    // Aplica o CSS da versão correta
     document.getElementById('css-link').href = `${pasta}/style.css`;
 
-    // Carrega o HTML da pasta
+    // Carrega o conteúdo HTML da pasta correta
     fetch(`${pasta}/index.html`)
       .then(res => res.text())
       .then(html => {
-        // Corrige os caminhos relativos de imagens, links e scripts
+        // Corrige caminhos relativos no HTML (imagens, CSS, etc.)
         const corrigido = html.replace(/(src|href)=["'](?!https?:|\/)([^"']+)["']/g, (match, tipo, caminho) => {
           return `${tipo}="${pasta}/${caminho}"`;
         });
 
-        // Insere o conteúdo corrigido
         document.getElementById('app').innerHTML = corrigido;
 
-        // Carrega script.js externo, se necessário
+        // Carrega o script.js específico da versão
         const script = document.createElement('script');
         script.src = `${pasta}/script.js`;
         document.body.appendChild(script);
       })
       .catch(err => {
-        console.error('Erro ao carregar:', err);
+        console.error('Erro ao carregar conteúdo:', err);
         document.getElementById('app').innerText = 'Erro ao carregar conteúdo.';
       });
   </script>
