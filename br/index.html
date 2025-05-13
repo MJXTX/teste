@@ -8,7 +8,6 @@
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
   <script>
-    // Inicialização do GA
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
@@ -24,7 +23,6 @@
         const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         const devicePath = isMobile ? 'mobile' : 'desktop';
 
-        // Envia evento ao GA
         gtag('event', 'page_redirect', {
           'country': country,
           'device_type': devicePath,
@@ -42,7 +40,5 @@
     })();
   </script>
 </head>
-<body>
-  <!-- Redirecionando... -->
-</body>
+<body></body>
 </html>
