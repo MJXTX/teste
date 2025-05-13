@@ -15,7 +15,7 @@
     gtag('config', 'G-XT86ZNLK1N');
   </script>
 
-  <!-- Estilo dinâmico (opcional) -->
+  <!-- Carregar o estilo de acordo com o dispositivo -->
   <link id="dynamic-style" rel="stylesheet" href="">
 </head>
 <body>
@@ -23,14 +23,14 @@
 
   <script>
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-    const pasta = isMobile ? 'mobile' : 'desktop';
+    const pasta = isMobile ? 'mobile' : 'desktop';  // Determina qual pasta carregar
 
-    // Envia evento para GA
+    // Envia evento para o GA
     gtag('event', 'auto_redirect', {
       'device_type': pasta
     });
 
-    // Carrega CSS se necessário
+    // Carrega o CSS da pasta correta
     const cssPath = `${pasta}/style.css`;
     fetch(cssPath).then(r => {
       if (r.ok) {
@@ -44,7 +44,7 @@
       .then(html => {
         document.getElementById('app').innerHTML = html;
 
-        // Opcional: carregar JS do conteúdo
+        // Carregar JS associado ao conteúdo carregado
         const script = document.createElement('script');
         script.src = `${pasta}/script.js`;
         document.body.appendChild(script);
@@ -52,6 +52,18 @@
       .catch(() => {
         document.getElementById('app').innerHTML = "Erro ao carregar o conteúdo.";
       });
+
+    // Ajuste nas URLs das imagens
+    function updateImagePaths() {
+      const images = document.querySelectorAll('img');
+      images.forEach(img => {
+        const originalSrc = img.getAttribute('src');
+        img.setAttribute('src', `/${pasta}/${originalSrc}`);
+      });
+    }
+
+    // Executa a atualização das imagens após o conteúdo ser carregado
+    document.addEventListener('DOMContentLoaded', updateImagePaths);
   </script>
 </body>
 </html>
