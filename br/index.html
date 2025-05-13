@@ -13,34 +13,26 @@
     gtag('js', new Date());
     gtag('config', 'G-XT86ZNLK1N');
 
-    window.addEventListener('load', async () => {
+    window.addEventListener('load', () => {
       const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-      const deviceFolder = isMobile ? 'mobile' : 'desktop';
-      const destino = `${deviceFolder}/index.html`;
+      const destino = isMobile ? '/mobile' : '/desktop'; // Destino sem o index.html
 
-      // GA event
+      // Envia evento para GA antes do redirecionamento
       gtag('event', 'auto_redirect', {
         'device_type': isMobile ? 'mobile' : 'desktop'
       });
 
-      // Aguarda 200ms para o GA registrar
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      try {
-        const response = await fetch(destino);
-        const html = await response.text();
-        document.open();
-        document.write(html);
-        document.close();
-
-        // Mantém URL limpa
-        history.replaceState(null, '', window.location.pathname.replace(/\/(mobile|desktop)\/index\.html$/, '/'));
-      } catch (e) {
-        console.error('Erro ao carregar conteúdo:', e);
-        document.body.innerHTML = '<h1>Erro ao carregar a página</h1>';
-      }
+      // Aguarda 300ms para garantir o envio do evento
+      setTimeout(() => {
+        // Usando pushState para mudar a URL sem recarregar a página
+        window.history.pushState(null, null, destino);
+        
+        // Agora, redireciona para o destino correto
+        window.location.replace(destino + '/index.html');
+      }, 300);
     });
   </script>
 </head>
 
+  
 </html>
