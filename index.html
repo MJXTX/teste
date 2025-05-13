@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Teste Google Analytics</title>
-
-    <!-- Google Analytics (GA4) -->
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-6E8ZC9YNDQ');
-</script>
-  </head>
-  <body>
-    <h1>Teste Google Analytics2</h1>
-    <p>Essa página serve apenas para testar se o rastreamento está funcionando.</p>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Teste Google Analytics (Universal Analytics)</title>
+    
+    <!-- Global Site Tag (gtag.js) - Google Analytics (Universal) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-6E8ZC9YNDQ');  // Substitua pelo seu ID UA real
+    </script>
+</head>
+<body>
+    <h1>Teste Google Analytics Universal (UA)</h1>
+    <p>Esta página testa o rastreamento do Universal Analytics via gtag.js.</p>
+</body>
 </html>
