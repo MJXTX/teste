@@ -1,131 +1,94 @@
-// Array com as imagens sobrepostas
-const imagensSobrepostas = [
-    "sobreposta1.png",
-    "sobreposta2.png",
-    "sobreposta3.png",
-    "sobreposta4.png",
-    "sobreposta5.png"
-    ];
+// Define a base path, ex: 'mobile' ou 'desktop' — vem do HTML principal
+const basePath = window.basePath || ''; // fallback para evitar erro
 
+// Função utilitária para gerar o caminho correto da imagem
+const path = (arquivo) => `${basePath}/imagens/${arquivo}`;
+
+// Arrays com imagens usando caminho absoluto da pasta correta
+const imagensSobrepostas = [
+    path("sobreposta1.png"),
+    path("sobreposta2.png"),
+    path("sobreposta3.png"),
+    path("sobreposta4.png"),
+    path("sobreposta5.png")
+];
 let indiceAtual = 0;
 
-
 const imagensSobrepostas10 = [
-    "fundo50.png",
-    "fundo55.png"
-    
-    
-    
-    
-    ];
-
+    path("fundo50.png"),
+    path("fundo55.png")
+];
 let indiceAtual10 = 0;
 
 const imagensSobrepostas12 = [
-    "fundo61.png",
-    "fundo62.png",
-    "fundo63.png"
-    
-    
-    
-    ];
-
+    path("fundo61.png"),
+    path("fundo62.png"),
+    path("fundo63.png")
+];
 let indiceAtual12 = 0;
 
-
-
 const limagensSobrepostas = [
-    "sobrepo4.png",
-    "sobrepo6.png",
-    "sobrepo5.png"
-    
-    ];
-
+    path("sobrepo4.png"),
+    path("sobrepo6.png"),
+    path("sobrepo5.png")
+];
 let lindiceAtual = 0;
 
-
-
 const alimagensSobrepostas = [
-    "fundo5.png",
-    "fundo6.png",
-    "fundo7.png"
-    
-    ];
-
+    path("fundo5.png"),
+    path("fundo6.png"),
+    path("fundo7.png")
+];
 let alindiceAtual = 0;
-// Função para trocar a imagem
+
+// Funções para trocar imagens com efeito de fade
+
 function trocarImagem() {
     const imagemSobreposta = document.getElementById("imagemSobreposta");
-
-    // Aplica efeito de fade out
     imagemSobreposta.style.opacity = 0;
-
-    // Troca a imagem após o fade out
     setTimeout(() => {
         indiceAtual = (indiceAtual + 1) % imagensSobrepostas.length;
         imagemSobreposta.src = imagensSobrepostas[indiceAtual];
-        imagemSobreposta.style.opacity = 1; // Fade in
-    }, 1000); // Tempo correspondente à duração da transição (0.5s)
+        imagemSobreposta.style.opacity = 1;
+    }, 1000);
 }
 
 function trocarImagem10() {
     const imagemSobreposta10 = document.getElementById("imagemSobreposta10");
-
-    // Aplica efeito de fade out
     imagemSobreposta10.style.opacity = 0;
-
-    // Troca a imagem após o fade out
     setTimeout(() => {
         indiceAtual10 = (indiceAtual10 + 1) % imagensSobrepostas10.length;
         imagemSobreposta10.src = imagensSobrepostas10[indiceAtual10];
-        imagemSobreposta10.style.opacity = 1; // Fade in
-    }, 1000); // Tempo correspondente à duração da transição (0.5s)
+        imagemSobreposta10.style.opacity = 1;
+    }, 1000);
 }
-
 
 function trocarImagem12() {
     const imagemSobreposta12 = document.getElementById("imagemSobreposta12");
-
-    // Aplica efeito de fade out
     imagemSobreposta12.style.opacity = 0;
-
-    // Troca a imagem após o fade out
     setTimeout(() => {
         indiceAtual12 = (indiceAtual12 + 1) % imagensSobrepostas12.length;
         imagemSobreposta12.src = imagensSobrepostas12[indiceAtual12];
-        imagemSobreposta12.style.opacity = 1; // Fade in
-    }, 1000); // Tempo correspondente à duração da transição (0.5s)
+        imagemSobreposta12.style.opacity = 1;
+    }, 1000);
 }
 
-
-// Função para trocar a imagem
 function trocarImagemm() {
     const imagemSobrepo = document.getElementById("imagemSobrepo");
-
-    // Aplica efeito de fade out
     imagemSobrepo.style.opacity = 0;
-
-    // Troca a imagem após o fade out
     setTimeout(() => {
         lindiceAtual = (lindiceAtual + 1) % limagensSobrepostas.length;
         imagemSobrepo.src = limagensSobrepostas[lindiceAtual];
-        imagemSobrepo.style.opacity = 1; // Fade in
-    }, 1000); // Tempo correspondente à duração da transição (0.5s)
+        imagemSobrepo.style.opacity = 1;
+    }, 1000);
 }
 
-
-
-// Função para trocar a imagem
 function ltrocarImagemm() {
-    const imagemSobrepo = document.getElementById("limagemSobrepo");
-
-    // Aplica efeito de fade out
+    const limagemSobrepo = document.getElementById("limagemSobrepo");
     limagemSobrepo.style.opacity = 0;
-
-    // Troca a imagem após o fade out
     setTimeout(() => {
         alindiceAtual = (alindiceAtual + 1) % alimagensSobrepostas.length;
         limagemSobrepo.src = alimagensSobrepostas[alindiceAtual];
-        limagemSobrepo.style.opacity = 1; // Fade in
-    }, 1000); // Tempo correspondente à duração da transição (0.5s)
+        limagemSobrepo.style.opacity = 1;
+    }, 1000);
 }
