@@ -13,20 +13,15 @@
     gtag('js', new Date());
     gtag('config', 'G-6E8ZC9YNDQ');
 
-    window.addEventListener('load', () => {
-      const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-      const destino = isMobile ? 'mobile/index.html' : 'desktop/index.html';
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+    const destino = isMobile ? 'mobile/index.html' : 'desktop/index.html';
 
-      // Envia evento para GA antes do redirecionamento
-      gtag('event', 'auto_redirect', {
-        'device_type': isMobile ? 'mobile' : 'desktop'
-      });
-
-      // Aguarda 300ms para garantir o envio do evento
-      setTimeout(() => {
-        window.location.replace(destino);
-      }, 300);
+    // Envia evento e redireciona logo em seguida
+    gtag('event', 'auto_redirect', {
+      'device_type': isMobile ? 'mobile' : 'desktop'
     });
+
+    window.location.replace(destino);
   </script>
 </head>
 </html>
