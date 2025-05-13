@@ -2,23 +2,109 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta tag CSP compatível com GitHub Pages -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://*.google-analytics.com 'unsafe-inline'; img-src * data:; connect-src *">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seu Site no GitHub Pages</title>
     
-    <!-- Script GA4 modificado para GitHub -->
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){window.dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-6E8ZC9YNDQ', {
-            cookie_flags: 'SameSite=None;Secure',
-            send_page_view: true,
-            transport_url: 'https://www.google-analytics.com'
-        });
-    </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ"></script>
+    <!-- Política de Segurança Otimizada para GitHub Pages + GA4 -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' https://www.googletagmanager.com https://*.google-analytics.com 'unsafe-inline';
+        img-src 'self' https://*.google-analytics.com data:;
+        connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com;
+        frame-src 'none';
+        style-src 'self' 'unsafe-inline';
+        font-src 'self';
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+    ">
+    
+    <!-- Pré-conexão para melhor performance -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    Conteúdo do seu site
+    <h1>Meu Site no GitHub Pages</h1>
+    <p>Implementação robusta do Google Analytics 4</p>
+    
+    <!-- Implementação Principal do GA4 -->
+    <script>
+        // Configuração inicial do dataLayer
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        // Configuração estendida para GitHub Pages
+        gtag('config', 'G-6E8ZC9YNDQ', {
+            cookie_flags: 'SameSite=None;Secure',
+            transport_url: 'https://www.google-analytics.com',
+            send_page_view: true,
+            debug_mode: true
+        });
+    </script>
+    
+    <!-- Carregamento assíncrono com fallback -->
+    <script>
+        (function() {
+            var gaLoadTimeout = setTimeout(function() {
+                if(typeof gtag === 'undefined') {
+                    console.warn('GTAG não carregado - Acionando fallback manual');
+                    fetch('https://www.google-analytics.com/g/collect?v=2&tid=G-6E8ZC9YNDQ&en=fallback_ping&epn.status=manual_fallback', {
+                        mode: 'no-cors',
+                        keepalive: true
+                    });
+                }
+            }, 3000);
+            
+            var gaScript = document.createElement('script');
+            gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6E8ZC9YNDQ';
+            gaScript.async = true;
+            gaScript.onload = function() { clearTimeout(gaLoadTimeout); };
+            gaScript.onerror = function() {
+                clearTimeout(gaLoadTimeout);
+                console.error('Falha no carregamento do GTAG - Usando fallback completo');
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-6E8ZC9YNDQ', {
+                    transport_type: 'beacon',
+                    cookie_flags: 'SameSite=None;Secure'
+                });
+                
+                // Envio manual de eventos críticos
+                navigator.sendBeacon('https://www.google-analytics.com/g/collect', new URLSearchParams({
+                    v: '2',
+                    tid: 'G-6E8ZC9YNDQ',
+                    en: 'page_view',
+                    dl: window.location.href,
+                    dt: document.title
+                }));
+            };
+            document.head.appendChild(gaScript);
+        })();
+    </script>
+    
+    <!-- Verificação de funcionamento -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('GA4 Debug: Página carregada - Verificando tracking...');
+            setTimeout(function() {
+                if(window.dataLayer && window.dataLayer.some(i => i.event === 'gtm.js')) {
+                    console.log('✅ GA4 carregado com sucesso via GTAG');
+                } else {
+                    console.warn('⚠️ GA4 não detectado - Fallback ativado');
+                }
+            }, 2000);
+        });
+    </script>
 </body>
 </html>
