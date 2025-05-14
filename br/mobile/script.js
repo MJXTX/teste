@@ -1,5 +1,5 @@
 // Detecta a pasta com base na variável global definida no index.html
-const path = (window.basePath || '') + '/imagens';
+const path = window.basePath || '';
 
 // Arrays com caminhos ajustados
 const imagensSobrepostas = [
