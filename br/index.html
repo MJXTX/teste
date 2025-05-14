@@ -2,56 +2,41 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>PAISLEY LOVERS BR © Official Site | Luminis </title>
+  <title>PAISLEY LOVERS BR © Official Site | Luminis</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT86ZNLK1N"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-XT86ZNLK1N');
-  </script>
-
-  <!-- CSS será carregado dinamicamente -->
   <link id="css-link" rel="stylesheet">
-</head>
-<body>
-  <div id="app">Carregando...</div>
-
   <script>
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
     const pasta = isMobile ? 'mobile' : 'desktop';
     window.basePath = pasta;
+    document.documentElement.classList.add(pasta); // Para facilitar seletores no CSS
+  </script>
+</head>
+<body>
+  <!-- Conteúdo COMUM das duas versões -->
 
-    gtag('event', 'auto_redirect', {
-      'device_type': pasta
-    });
+  <!-- Conteúdo específico de cada versão -->
+  <div class="mobile-only" style="display:none">
+    <!-- conteúdo da versão mobile aqui -->
+    <img id="imagemSobreposta" src="mobile/sobreposta1.webp" alt="">
+  </div>
 
-    // Aplica o CSS da versão correta
-    document.getElementById('css-link').href = `${pasta}/style.css`;
+  <div class="desktop-only" style="display:none">
+    <!-- conteúdo da versão desktop aqui -->
+    <img id="imagemSobreposta" src="desktop/sobreposta1.webp" alt="">
+  </div>
 
-    // Carrega o conteúdo HTML da pasta correta
-    fetch(`${pasta}/index.html`)
-      .then(res => res.text())
-      .then(html => {
-        // Corrige caminhos relativos no HTML (imagens, CSS, etc.)
-        const corrigido = html.replace(/(src|href)=["'](?!https?:|\/)([^"']+)["']/g, (match, tipo, caminho) => {
-          return `${tipo}="${pasta}/${caminho}"`;
-        });
+  <script>
+    // Aplica o CSS correto
+    document.getElementById('css-link').href = `${window.basePath}/style.css`;
 
-        document.getElementById('app').innerHTML = corrigido;
+    // Mostra a versão certa
+    document.querySelector(`.${window.basePath}-only`).style.display = 'block';
 
-        // Carrega o script.js específico da versão
-        const script = document.createElement('script');
-        script.src = `${pasta}/script.js`;
-        document.body.appendChild(script);
-      })
-      .catch(err => {
-        console.error('Erro ao carregar conteúdo:', err);
-        document.getElementById('app').innerText = 'Erro ao carregar conteúdo.';
-      });
+    // Carrega JS correto
+    const script = document.createElement('script');
+    script.src = `${window.basePath}/script.js`;
+    document.body.appendChild(script);
   </script>
 </body>
 </html>
