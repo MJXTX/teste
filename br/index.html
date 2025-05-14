@@ -16,33 +16,42 @@
 
   <!-- CSS será carregado dinamicamente -->
   <link id="css-link" rel="stylesheet">
-
-  <!-- Pode adicionar pré-carregamento de recursos, caso tenha imagens críticas -->
-  <link rel="preload" href="mobile/sobreposta1.webp" as="image">
-  <link rel="preload" href="mobile/sobreposta2.webp" as="image">
-  <link rel="preload" href="desktop/sobreposta1.webp" as="image">
 </head>
 <body>
-  <!-- Carregar o conteúdo direto aqui (substitua o conteúdo do 'app') -->
-  <div id="app">
-    <!-- Este conteúdo será trocado dinamicamente com base no dispositivo -->
-    <h1>Bem-vindo ao Paisley Lovers!</h1>
-    <p>A página irá carregar as imagens corretamente com base no seu dispositivo.</p>
-  </div>
+  <div id="app">Carregando...</div>
 
   <script>
-    // Verifica se é um dispositivo móvel
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
     const pasta = isMobile ? 'mobile' : 'desktop';
     window.basePath = pasta;
 
-    // Aplica o CSS correto
+    gtag('event', 'auto_redirect', {
+      'device_type': pasta
+    });
+
+    // Aplica o CSS da versão correta
     document.getElementById('css-link').href = `${pasta}/style.css`;
 
-    // Carrega o script correto com base no dispositivo
-    const script = document.createElement('script');
-    script.src = `${pasta}/script.js`;
-    document.body.appendChild(script);
+    // Carrega o conteúdo HTML da pasta correta
+    fetch(`${pasta}/index.html`)
+      .then(res => res.text())
+      .then(html => {
+        // Corrige caminhos relativos no HTML (imagens, CSS, etc.)
+        const corrigido = html.replace(/(src|href)=["'](?!https?:|\/)([^"']+)["']/g, (match, tipo, caminho) => {
+          return `${tipo}="${pasta}/${caminho}"`;
+        });
+
+        document.getElementById('app').innerHTML = corrigido;
+
+        // Carrega o script.js específico da versão
+        const script = document.createElement('script');
+        script.src = `${pasta}/script.js`;
+        document.body.appendChild(script);
+      })
+      .catch(err => {
+        console.error('Erro ao carregar conteúdo:', err);
+        document.getElementById('app').innerText = 'Erro ao carregar conteúdo.';
+      });
   </script>
 </body>
 </html>
