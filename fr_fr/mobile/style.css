@@ -1,0 +1,855 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo do corpo da página */
+body, html {
+    max-width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    justify-content: center;
+    overflow-x: hidden; /* Impede o scroll horizontal */
+    padding: 0 1px;
+}
+
+/* Container da galeria */
+.gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Espaçamento entre as imagens */
+    padding: 20px;
+    width: 100%; /* Ocupa 100% da largura da viewport */
+    max-width: 1920px; /* Largura máxima para desktops grandes */
+    margin: 0 auto; /* Centraliza o container na tela */
+
+}
+
+/* Estilo das imagens */
+.gallery img {
+    width: 100%; /* Faz a imagem ocupar 100% da largura do container */
+    max-width: 100%; /* Garante que a imagem não ultrapasse a largura da tela */
+    height: auto; /* Mantém a proporção da imagem */
+    display: block; /* Remove espaços extras abaixo da imagem */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+/* Efeito de hover nas imagens */
+.gallery img:hover {
+    transform: scale(1.02);
+}
+
+
+
+
+
+
+/* Container da section with botao de troca 2 fotos 1 sobreposta */
+
+
+/* Container da section */
+.imagem-container4 {
+    position: relative;
+    max-width: 100%;/*   mudei */
+    margin: 0 auto;
+    height: auto; /* Altura fixa para o container mudei */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
+}
+
+/* Imagem de fundo */
+.imagem-fundo4 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir todo o container */
+    border-radius: 10px;
+    
+}
+
+/* Imagem sobreposta */
+.imagem-sobreposta4 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Tamanho da imagem sobreposta */
+    height: auto;
+    transition: opacity 0.5s ease-in-out; /* Efeito de transição */
+}
+
+.imagem-sobreposta4 img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+#imagemSobreposta {
+    max-width: 100%;
+    max-height: 100%;
+    opacity: 1; /* Inicialmente visível */
+    transition: opacity 1s ease-in-out; /* Transição suave de 1 segundo */
+    border-radius: 10px;
+   
+}
+
+/* Botão invisível */
+.botao-trocar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    outline: none; /* Remove a borda de foco */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque ao tocar (mobile) */
+}
+
+
+/*       segundasection             */
+
+/* Container da section with botao de troca 2 fotos 1 sobreposta */
+
+
+
+
+.imagem-container1 {
+    position: relative;
+    max-width: 80%;/*   mudei */
+    margin: 0 auto;
+    height: auto; /* Altura fixa para o container mudei */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
+}
+
+/* Imagem de fundo */
+.imagem-fundo1 img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir todo o container */
+    border-radius: 10px;
+    z-index: 2
+}
+
+/* Imagem sobreposta */
+.imagem-sobreposta1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Tamanho da imagem sobreposta */
+    height: auto;
+    object-fit: cover; /* Cobrir todo o container */
+    transition: opacity 0.5s ease-in-out; /* Efeito de transição */
+    z-index: 1
+}
+/* 
+.imagem-sobreposta1 img {
+    
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    
+
+}
+*/
+#imagemSobrepo {
+    max-width: 100%;
+    max-height: 100%;
+    opacity: 1; /* Inicialmente visível */
+    transition: opacity 1s ease-in-out; /* Transição suave de 1 segundo */
+    border-radius: 10px;
+   
+}
+
+/* Botão invisível */
+.botao-trocar1 {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    top: 100%;
+    left: 50%;
+    width: 100%;
+    height:100% ;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    z-index: 3;
+    outline: none; /* Remove a borda de foco */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque ao tocar (mobile) */
+    
+}
+
+
+
+.imagem-container2 {
+    position: relative;
+    max-width: 80%;/*   mudei */
+    margin: 0 auto;
+    height: auto; /* Altura fixa para o container mudei */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+ 
+
+}
+
+.imagem-sobreposta2{
+    position: relative;
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 100%; /* Tamanho da imagem sobreposta */
+    height: auto;
+    object-fit: cover; /* Cobrir todo o container */
+    transition: opacity 0.5s ease-in-out; /* Efeito de transição */
+    
+}
+
+#limagemSobrepo {
+    max-width: 100%;
+    max-height: 100%;
+    opacity: 1; /* Inicialmente visível */
+    transition: opacity 1s ease-in-out; /* Transição suave de 1 segundo */
+    border-radius: 10px;
+   
+}
+
+.botao-trocar2 {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    top: 100%;
+    left: 50%;
+    width: 100%;
+    height:100% ;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    outline: none; /* Remove a borda de foco */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque ao tocar (mobile) */
+
+}
+
+
+
+
+
+.botao-trocar3 {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    top: 100%;
+    left: 50%;
+    width: 100%;
+    height:100% ;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    z-index: 3;
+    outline: none; /* Remove a borda de foco */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque ao tocar (mobile) */
+    
+
+}
+
+.imagem-container3 {
+    position: relative;
+    max-width: 100%;/*   mudei */
+    margin: 0 auto;
+    height: auto; /* Altura fixa para o container mudei */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
+}
+
+/* Estilo das imagens */
+.imagem-container3 img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir todo o container */
+    border-radius: 10px;
+    z-index: 2
+   
+}
+
+
+
+
+/* Container da section with botao de troca 2 fotos 1 sobreposta */
+
+
+
+
+
+/* Reset básico */
+
+/* LEGACY */
+.imagem-container5 {
+    position: relative;
+    max-width: 100%;/*   mudei */
+    margin: 0 auto;
+    height: auto; /* Altura fixa para o container mudei */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
+}
+
+/* Imagem de fundo */
+.imagem-fundo5 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir todo o container */
+    border-radius: 10px;
+    
+}
+
+/* Imagem sobreposta */
+.imagem-sobreposta5 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Tamanho da imagem sobreposta */
+    height: auto;
+    transition: opacity 0.5s ease-in-out; /* Efeito de transição */
+}
+
+.imagem-sobreposta5 img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+#imagemSobreposta5 {
+    max-width: 100%;
+    max-height: 100%;
+    opacity: 1; /* Inicialmente visível */
+    transition: opacity 1s ease-in-out; /* Transição suave de 1 segundo */
+    border-radius: 10px;
+   
+}
+
+/* Botão invisível */
+.botao-trocar5 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    outline: none; /* Remove a borda de foco */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque ao tocar (mobile) */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* pergunta */
+.imagem-container8 {
+    position: relative;
+    max-width: 100%;/*   mudei */
+    margin: 0 auto;
+    height: auto; /* Altura fixa para o container mudei */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   
+}
+
+/* Imagem de fundo */
+.imagem-fundo8 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir todo o container */
+    border-radius: 10px;
+    
+}
+
+/* Imagem sobreposta */
+.imagem-sobreposta8 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Tamanho da imagem sobreposta */
+    height: auto;
+    transition: opacity 0.5s ease-in-out; /* Efeito de transição */
+}
+
+.imagem-sobreposta8 img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+#imagemSobreposta8 {
+    max-width: 100%;
+    max-height: 100%;
+    opacity: 1; /* Inicialmente visível */
+    transition: opacity 1s ease-in-out; /* Transição suave de 1 segundo */
+    border-radius: 10px;
+   
+}
+
+/* Botão invisível */
+.botao-trocar8 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    outline: none; /* Remove a borda de foco */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque ao tocar (mobile) */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Historia */
+.imagem-container9 {
+    position: relative;
+    max-width: 100%;/*   mudei */
+    margin: 0 auto;
+    height: auto; /* Altura fixa para o container mudei */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+ 
+}
+
+/* Imagem de fundo */
+.imagem-fundo9 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir todo o container */
+    border-radius: 10px;
+    
+}
+
+/* Imagem sobreposta */
+.imagem-sobreposta9 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Tamanho da imagem sobreposta */
+    height: auto;
+    transition: opacity 0.5s ease-in-out; /* Efeito de transição */
+}
+
+.imagem-sobreposta9 img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+#imagemSobreposta9 {
+    max-width: 100%;
+    max-height: 100%;
+    opacity: 1; /* Inicialmente visível */
+    transition: opacity 1s ease-in-out; /* Transição suave de 1 segundo */
+    border-radius: 10px;
+   
+}
+
+/* Botão invisível */
+.botao-trocar9 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    outline: none; /* Remove a borda de foco */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque ao tocar (mobile) */
+}
+
+
+
+
+
+
+/* warning */
+.imagem-container10 {
+    position: relative;
+    max-width: 100%;/*   mudei */
+    margin: 0 auto;
+    height: auto; /* Altura fixa para o container mudei */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+ 
+}
+
+/* Imagem de fundo */
+.imagem-fundo10 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir todo o container */
+    border-radius: 10px;
+    
+}
+
+/* Imagem sobreposta */
+.imagem-sobreposta10 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Tamanho da imagem sobreposta */
+    height: auto;
+    transition: opacity 0.5s ease-in-out; /* Efeito de transição */
+}
+
+.imagem-sobreposta10 img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+#imagemSobreposta10 {
+    max-width: 100%;
+    max-height: 100%;
+    opacity: 1; /* Inicialmente visível */
+    transition: opacity 0.5s ease-in-out; /* Transição suave de 1 segundo */
+    border-radius: 10px;
+   
+}
+
+/* Botão invisível */
+.botao-trocar10 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    outline: none; /* Remove a borda de foco */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque ao tocar (mobile) */
+}
+
+
+
+
+
+
+
+
+
+
+/* pendants */
+.imagem-container11 {
+    position: relative;
+    max-width: 100%;/*   mudei */
+    margin: 0 auto;
+    height: auto; /* Altura fixa para o container mudei */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+ 
+}
+
+/* Imagem de fundo */
+.imagem-fundo11 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir todo o container */
+    border-radius: 10px;
+    
+}
+
+/* Imagem sobreposta */
+.imagem-sobreposta11 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Tamanho da imagem sobreposta */
+    height: auto;
+    transition: opacity 0.5s ease-in-out; /* Efeito de transição */
+}
+
+.imagem-sobreposta11 img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+#imagemSobreposta11{
+    max-width: 100%;
+    max-height: 100%;
+    opacity: 1; /* Inicialmente visível */
+    transition: opacity 1s ease-in-out; /* Transição suave de 1 segundo */
+    border-radius: 10px;
+   
+}
+
+/* Botão invisível */
+.botao-trocar11 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    outline: none; /* Remove a borda de foco */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque ao tocar (mobile) */
+}
+
+
+
+
+
+
+
+
+
+/* titulo renasce apresentação */
+.imagem-container12 {
+    position: relative;
+    max-width: 100%;/*   mudei */
+    margin: 0 auto;
+    height: auto; /* Altura fixa para o container mudei */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+ 
+}
+
+/* Imagem de fundo */
+.imagem-fundo12 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir todo o container */
+    border-radius: 10px;
+    
+}
+
+/* Imagem sobreposta */
+.imagem-sobreposta12 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Tamanho da imagem sobreposta */
+    height: auto;
+    transition: opacity 0.5s ease-in-out; /* Efeito de transição */
+}
+
+.imagem-sobreposta12 img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+#imagemSobreposta12{
+    max-width: 100%;
+    max-height: 100%;
+    opacity: 1; /* Inicialmente visível */
+    transition: opacity 1s ease-in-out; /* Transição suave de 1 segundo */
+    border-radius: 10px;
+   
+}
+
+/* Botão invisível */
+.botao-trocar12 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    outline: none; /* Remove a borda de foco */
+    -webkit-tap-highlight-color: transparent; /* Remove o destaque ao tocar (mobile) */
+}
+
+
+
+
+
+
+
+
+/* pendants */
+.imagem-container13 {
+    position: relative;
+    width: 100%; /* Ocupa toda a largura da tela */
+    height: 100vh; /* Ocupa toda a altura da tela (viewport height) */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    overflow: hidden; /* Garante que nada ultrapasse o container */
+  
+}
+
+/* Imagem de fundo */
+.imagem-container13 img {
+    width: 100%; /* Faz a imagem ocupar 100% da largura do container */
+    max-width: 100%; /* Garante que a imagem não ultrapasse a largura da tela */
+    height: auto; /* Mantém a proporção da imagem */
+    display: block; /* Remove espaços extras abaixo da imagem */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Media Queries para Responsividade */
+
+/* Telas menores que 1920px (Desktops menores) */
+@media (max-width: 1920px) {
+    .gallery {
+        padding: 20px; /* Mantém o padding padrão */
+    }
+}
+
+/* Telas menores que 1366px (Laptops pequenos) */
+@media (max-width: 1366px) {
+    .gallery {
+        padding: 15px; /* Reduz o padding */
+    }
+}
+
+/* Telas menores que 768px (Tablets e Celulares) */
+@media (max-width: 768px) {
+    .gallery {
+        padding: 10px; /* Reduz o padding em telas menores */
+        gap: 10px; /* Reduz o espaçamento entre as imagens */
+    }
+
+    .gallery img {
+        border-radius: 5px; /* Bordas mais arredondadas para telas menores */
+    }
+}
+
+/* Telas menores que 480px (Celulares pequenos) */
+@media (max-width: 480px) {
+    .gallery {
+        padding: 5px; /* Padding ainda menor para celulares */
+        gap: 5px; /* Espaçamento mínimo entre as imagens */
+    }
+
+    .gallery img {
+        border-radius: 0; /* Remove bordas arredondadas para telas muito pequenas */
+    }
+}
