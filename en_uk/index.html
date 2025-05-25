@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>PAISLEY LOVERS UK © Official Site | Luminis </title>
+  <title>PAISLEY LOVERS UK © Official Site | Luminis</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Google Analytics -->
@@ -19,6 +19,8 @@
 </head>
 <body>
 
+  <!-- Container para o conteúdo carregado dinamicamente -->
+  <div id="app"></div>
 
   <script>
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
@@ -53,5 +55,6 @@
         document.getElementById('app').innerText = 'Erro ao carregar conteúdo.';
       });
   </script>
+
 </body>
 </html>
